@@ -11,3 +11,34 @@
  along with this program. If not, see <https://www.gnu.org/licenses/>.
  Copyright (c) 2025 Guillermo Leira Temes
 */
+
+#include "../include/sysarena.h" // incluir la arena
+#include "../include/types.h" // incluir types.h, es rebundante pero por si acaso
+
+void poor_arena_init(Arena *arena) {
+    arena->size=0;
+    arena->used=0;
+    arena->base=null;
+    arena->in_use=false;
+}
+
+void arena_init(Arena *arena, size_t size, ptr_t base) {
+    arena->size=size;
+    arena->base=base;
+    arena->used=0;
+    arena->in_use=false;
+}
+
+void* arena_alloc(Arena *arena, size_t size) {
+    if (arena->used + size > arena->size) {
+        return null; // devolver null si no hay suficiente memoria
+    }
+    ptr_t ptr=(void *)(arena->used + arena->base);
+    arena->used += size;
+    return ptr;
+}
+
+void arena_free(Arena *arena) {
+    arena->used=0;
+    arena->in_use=false;
+}
