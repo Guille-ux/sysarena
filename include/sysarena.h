@@ -39,10 +39,11 @@ void arena_free(Arena *arena); // liberar toda la arena
 typedef struct ArenaManager {
     Arena* arenas;
     size_t max_arenas;
+    uint8_t *memory;
 } ArenaManager;
 
 // funciones de arenas complejas
-void sysarena_init(ArenaManager *manager, size_t size); // inicializa el sistema de arenas
+void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size); // inicializa el sistema de arenas
 
 ArenaManager new_sysarena(size_t size); // crea un nuevo manager de arenas
 
@@ -55,5 +56,7 @@ void sysarena_defragment(ArenaManager *manager); // recorre todas las arenas e i
 void* sysarena_alloc(ArenaManager *manager, size_t size); // reserva memoria en el sistema de multiples arenas
 
 void sysarena_free(ArenaManager *manager, void *ptr); // libera memoria
+
+void arena_split(Arena *src, size_t size); // dividir una arena
 
 #endif

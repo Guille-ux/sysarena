@@ -42,3 +42,8 @@ void arena_free(Arena *arena) {
     arena->used=0;
     arena->in_use=false;
 }
+
+void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size) {
+    manager->arenas = arenas;
+    manager->max_arenas=size;
+}
