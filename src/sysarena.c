@@ -47,3 +47,10 @@ void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t
     manager->arenas = arenas;
     manager->max_arenas=size;
 }
+
+bool arena_can_merge(Arena *a, Arena *b) {
+    if (a->in_use==false && b->in_use==false) {
+        return true;
+    }
+    return false;
+}
