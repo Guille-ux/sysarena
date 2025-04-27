@@ -92,7 +92,7 @@ void* sysarena_alloc(ArenaManager *manager, size_t size) {
             ptr_t to_ret = arena_alloc(&manager->arenas[i], size);
             //dividir la arena
             if (manager->arenas[i].used + size < manager->arenas[i].size) {
-                //lógica de división
+                sysarena_split(manager, i, size);
             }
             return to_ret;
         }
@@ -100,6 +100,30 @@ void* sysarena_alloc(ArenaManager *manager, size_t size) {
     return null;
 }
 
-void sysarena_split(ArenaManager *manager, Arena *src, size_t size) {
+void sysarena_split(ArenaManager *manager, size_t arena_index, size_t size) {
+    if (arena_index >= manager->max_arenas || manager->arenas[arena_index].in_use) {
+        return;
+    }
+    Arena *src = &manager->arenas[arena_index];
+    if (src->size < size + sizeof(Arena)) { 
+        return;
+    }
+    size_t new_arena_index = -1;
+    for (size_t i = 0; i < manager->max_arenas; i++) {
+        if (!manager->arenas[i].in_use) {
+            new_arena_index = i;
+            break;
+        }
+    }
+    if (new_arena_index == -1) {
+        return;
+    }
+    Arena *new_arena = &manager->arenas[new_arena_index];
+    new_arena->size = size;
+    new_arena->base = src->base;
+    new_arena->used = size;
+    new_arena->in_use = true;
 
+    src->size -= size;
+    src->base = (uint8_ptr_t)(src->base + size);
 }
