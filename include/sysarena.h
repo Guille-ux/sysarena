@@ -47,6 +47,8 @@ void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t
 
 bool arena_can_merge(Arena *a, Arena *b); // comprueba si 2 arenas se pueden fusionar
 
+bool arena_is_void(Arena *a);
+
 void arena_merge(Arena *dest, Arena *src); // une 2 arenas
 
 void sysarena_defragment(ArenaManager *manager); // recorre todas las arenas e intenta fusionarlas
@@ -55,6 +57,7 @@ void* sysarena_alloc(ArenaManager *manager, size_t size); // reserva memoria en 
 
 void sysarena_free(ArenaManager *manager, void *ptr); // libera memoria
 
-void arena_split(Arena *src, size_t size); // dividir una arena
+void sysarena_split(ArenaManager *manager, Arena *src, size_t size); // dividir una arena
+
 
 #endif

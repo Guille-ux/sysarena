@@ -46,6 +46,10 @@ void arena_free(Arena *arena) {
 void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size) {
     manager->arenas = arenas;
     manager->max_arenas=size;
+    arena_init(&manager->arenas[0], size, memory[0]);
+    for (size_t i=1; i < size; i++) {
+        poor_init_(&manager->arenas[i]);
+    }
 }
 
 bool arena_can_merge(Arena *a, Arena *b) {
@@ -53,4 +57,49 @@ bool arena_can_merge(Arena *a, Arena *b) {
         return true;
     }
     return false;
+}
+
+bool arena_is_void(Arena *a) {
+    if (a->used==0) {
+        return true;
+    }
+    return false;
+}
+
+void arena_merge(Arena *dest, Arena *src) {
+    dest->size+=src->size;
+    src->in_use=false;
+}
+
+void sysarena_defragment(ArenaManager *manager) {
+    for (size_t i = 0; i < manager->max_arenas; i++) {
+        size_t x=i+1;
+        while (true) {
+            if (arena_can_merge(&manager->arenas[i], &manager->arenas[x])) {
+                break;
+            }
+            x+=1;
+        }
+        if (arena_is_void(&manager->arenas[i]) && arena_is_void(&manager->arenas[x])) {
+            arena_merge(&manager->arenas[i], &manager->arenas[x]);
+        }
+    }
+}
+
+void* sysarena_alloc(ArenaManager *manager, size_t size) {
+    for (size_t i = 0; i < manager->max_arenas; i++) {
+        if (manager->arenas[i].size >= size + manager->arenas[i].used && manager->arenas[i].in_use) {
+            ptr_t to_ret = arena_alloc(&manager->arenas[i], size);
+            //dividir la arena
+            if (manager->arenas[i].used + size < manager->arenas[i].size) {
+                //lógica de división
+            }
+            return to_ret;
+        }
+    }
+    return null;
+}
+
+void sysarena_split(ArenaManager *manager, Arena *src, size_t size) {
+
 }
