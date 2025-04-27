@@ -46,9 +46,9 @@ void arena_free(Arena *arena) {
 void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size) {
     manager->arenas = arenas;
     manager->max_arenas=size;
-    arena_init(&manager->arenas[0], size, memory[0]);
+    arena_init(&manager->arenas[0], size, (ptr_t)&memory[0]);
     for (size_t i=1; i < size; i++) {
-        poor_init_(&manager->arenas[i]);
+        poor_arena_init(&manager->arenas[i]);
     }
 }
 
@@ -108,14 +108,14 @@ void sysarena_split(ArenaManager *manager, size_t arena_index, size_t size) {
     if (src->size < size + sizeof(Arena)) { 
         return;
     }
-    size_t new_arena_index = -1;
+    size_t new_arena_index = 0;
     for (size_t i = 0; i < manager->max_arenas; i++) {
         if (!manager->arenas[i].in_use) {
             new_arena_index = i;
             break;
         }
     }
-    if (new_arena_index == -1) {
+    if (new_arena_index == 0) {
         return;
     }
     Arena *new_arena = &manager->arenas[new_arena_index];
