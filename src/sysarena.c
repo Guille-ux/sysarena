@@ -127,3 +127,14 @@ void sysarena_split(ArenaManager *manager, size_t arena_index, size_t size) {
     src->size -= size;
     src->base = (uint8_ptr_t)(src->base + size);
 }
+
+void sysarena_free(ArenaManager *manager, void *ptr) {
+    for (size_t i = 0; i < manager->max_arenas; i++) {
+        ptr_t base = manager->arenas[i].base;
+        size_t size = manager->arenas[i].size;
+        if (ptr >= base && ptr < (ptr_t)((char*)base + size)) {
+            arena_free(&manager->arenas[i]);
+            return;
+        }
+    }
+}
