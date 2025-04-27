@@ -29,7 +29,7 @@ typedef struct Arena {
 
 void poor_arena_init(Arena *arena); // inicializa una arena con solo un bool in_use=false;
 
-void arena_init(Arena *arena, ptr_t base, size_t used); // inicializar arena
+void arena_init(Arena *arena, size_t size, ptr_t base); // inicializar arena
 
 void* arena_alloc(Arena *arena, size_t size); // reservar memoria
 
@@ -44,8 +44,6 @@ typedef struct ArenaManager {
 
 // funciones de arenas complejas
 void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size); // inicializa el sistema de arenas
-
-ArenaManager new_sysarena(size_t size); // crea un nuevo manager de arenas
 
 bool arena_can_merge(Arena *a, Arena *b); // comprueba si 2 arenas se pueden fusionar
 
