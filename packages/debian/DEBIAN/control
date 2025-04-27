@@ -1,0 +1,8 @@
+Package: sysarena
+Version: 1.0
+Section: libs
+Priority: optional
+Architecture: amd64
+Maintainer: Guille guillermoleiratemes@protonmail.com
+Description: Arena based memory management.
+ Arena-based memory management library created from scratch. Very lightweight, no malloc.
