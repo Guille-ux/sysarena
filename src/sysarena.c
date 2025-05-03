@@ -89,7 +89,7 @@ void sysarena_defragment(ArenaManager *manager) {
 
 void* sysarena_alloc(ArenaManager *manager, size_t size) {
     for (size_t i = 0; i < manager->max_arenas; i++) {
-        if (manager->arenas[i].size >= size + manager->arenas[i].used && manager->arenas[i].in_use) {
+        if (manager->arenas[i].size >= size && manager->arenas[i].in_use) {
             ptr_t to_ret = arena_alloc(&manager->arenas[i], size);
             //dividir la arena
             if (manager->arenas[i].used + size < manager->arenas[i].size) {
