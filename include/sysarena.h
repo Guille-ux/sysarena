@@ -57,7 +57,7 @@ void* sysarena_alloc(ArenaManager *manager, size_t size); // reserva memoria en 
 
 void sysarena_free(ArenaManager *manager, void *ptr); // libera memoria
 
-void sysarena_split(ArenaManager *manager,  size_t arena_inde, size_t size); // dividir una arena
+void sysarena_split(ArenaManager *manager,  size_t arena_index, size_t size); // dividir una arena
 
 
 #endif
