@@ -119,6 +119,9 @@ void sysarena_split(ArenaManager *manager, size_t arena_index, size_t size) {
     if (new_arena_index == 0) {
         return;
     }
+    if (manager->arenas[new_arena_index].in_use==true) {
+        sysarena_displacement(manager, new_arena_index);
+    }
     Arena *new_arena = &manager->arenas[new_arena_index];
     new_arena->size = size;
     new_arena->base = src->base+(src->size-size);
@@ -141,7 +144,7 @@ void sysarena_free(ArenaManager *manager, void *ptr) {
 
 void sysarena_displacement(ArenaManager *manager, size_t where) {
     for (size_t i=(manager->max_arenas-1); i>where; i--) {
-        copy_arena(&manager->arenas[i+1], &manager->arenas[i]);
+        copy_arena(&manager->arenas[i], &manager->arenas[i-1]);
     }
 }
 
