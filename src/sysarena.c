@@ -138,3 +138,14 @@ void sysarena_free(ArenaManager *manager, void *ptr) {
         }
     }
 }
+
+void sysarena_displacement(ArenaManager *manager, size_t where) {
+    // finnish later
+}
+
+void copy_arena(Arena *dest, Arena *src) {
+    dest->in_use=src->in_use;
+    dest->base=src->base;
+    dest->size=src->size;
+    dest->used=src->used;
+}

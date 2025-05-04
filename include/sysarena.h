@@ -59,5 +59,10 @@ void sysarena_free(ArenaManager *manager, void *ptr); // libera memoria
 
 void sysarena_split(ArenaManager *manager,  size_t arena_index, size_t size); // dividir una arena
 
+void sysarena_displacement(ArenaManager *manager, size_t from_wheres); //desplazar todas las arenas uno a la derecha
+
+//utilidades creadas para solucionar errores
+void copy_arena(Arena *dest, Arena *src); // copia una arena
+
 
 #endif
