@@ -40,10 +40,11 @@ typedef struct ArenaManager {
     Arena* arenas;
     size_t max_arenas;
     uint8_t *memory;
+    size_t size;
 } ArenaManager;
 
 // funciones de arenas complejas
-void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size); // inicializa el sistema de arenas
+void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size, size_t num_arenas); // inicializa el sistema de arenas
 
 bool arena_can_merge(Arena *a, Arena *b); // comprueba si 2 arenas se pueden fusionar
 

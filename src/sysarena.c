@@ -43,7 +43,7 @@ void arena_free(Arena *arena) {
     arena->in_use=false;
 }
 
-void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size) {
+void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size, size_t num_arenas) {
     manager->arenas = arenas;
     manager->max_arenas=size;
     arena_init(&manager->arenas[0], size, (ptr_t)&memory[0]);
@@ -140,7 +140,9 @@ void sysarena_free(ArenaManager *manager, void *ptr) {
 }
 
 void sysarena_displacement(ArenaManager *manager, size_t where) {
-    // finnish later
+    for (size_t i=(manager->max_arenas-1); i>where; i--) {
+        copy_arena(&manager->arenas[i+1], &manager->arenas[i]);
+    }
 }
 
 void copy_arena(Arena *dest, Arena *src) {

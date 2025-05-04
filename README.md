@@ -42,6 +42,10 @@ Multiple arenas can be managed at once through an `ArenaManager`, allowing compl
 
 ---
 
+## Documentation
+
+**I'm working on this**
+
 ## ⚙️ Requirements
 
 - **C99 compiler or newer**.
