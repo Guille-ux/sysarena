@@ -5,7 +5,7 @@
     "author_email": "guillermoleiratemes@protonmail.com",
     "mantainer_email": "NULL",
     "license": "GPL-3.0-or-later",
-    "depencies": [],
+    "dependencies": [],
     "entries": {
         "sysarena-build": "cd sysarena ; cd src ; make"
     }
