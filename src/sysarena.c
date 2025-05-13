@@ -46,9 +46,10 @@ void arena_free(Arena *arena) {
 void sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size, size_t num_arenas) {
     manager->arenas = arenas;
     manager->max_arenas=num_arenas;
+    manager->size=size;
     arena_init(&manager->arenas[0], size, (ptr_t)&memory[0]);
     manager->arenas[0].in_use=true;
-    for (size_t i=1; i < size; i++) {
+    for (size_t i=1; i < num_arenas; i++) {
         poor_arena_init(&manager->arenas[i]);
     }
 }
