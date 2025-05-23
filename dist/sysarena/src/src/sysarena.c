@@ -12,8 +12,9 @@
  Copyright (c) 2025 Guillermo Leira Temes
 */
 
+#include "../include/types.h" // incluir types.h ya no es rebundante
 #include "../include/sysarena.h" // incluir la arena
-#include "../include/types.h" // incluir types.h, es rebundante pero por si acaso
+
 
 void poor_arena_init(Arena *arena) {
     arena->size=0;

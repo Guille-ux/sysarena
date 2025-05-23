@@ -15,8 +15,6 @@
 #ifndef _SYSARENA_H
 #define _SYSARENA_H
 
-#include "types.h"
-
 // definiciones de estructuras
 typedef struct Arena {
     size_t size;
