@@ -39,6 +39,8 @@ Multiple arenas can be managed at once through an `ArenaManager`, allowing compl
 | `sysarena_alloc` | Allocates memory within the system of multiple arenas. |
 | `sysarena_free` | Frees memory pointed to by a given pointer. |
 | `sysarena_split` | Splits an Arena. |
+| `sysarena_displacement` | Move's arenas to make easier merge them. |
+| `copy_arena` | Function to copy an Arena to other Arena (used at `sysarena_displacement`). |
 
 ---
 
