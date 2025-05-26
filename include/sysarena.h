@@ -27,6 +27,7 @@ typedef struct Arena {
 
 // definiciones de funciones para arenas simples
 
+
 void poor_arena_init(Arena *arena); // inicializa una arena con solo un bool in_use=false;
 
 void arena_init(Arena *arena, size_t size, ptr_t base); // inicializar arena
