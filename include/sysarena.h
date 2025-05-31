@@ -42,6 +42,7 @@ typedef struct ArenaManager {
     size_t max_arenas;
     uint8_t *memory;
     size_t size;
+    size_t current_arena_idx;
 } ArenaManager;
 
 // funciones de arenas complejas
