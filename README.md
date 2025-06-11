@@ -41,6 +41,7 @@ Multiple arenas can be managed at once through an `ArenaManager`, allowing compl
 | `sysarena_split` | Splits an Arena. |
 | `sysarena_displacement` | Move's arenas to make easier merge them. |
 | `copy_arena` | Function to copy an Arena to other Arena (used at `sysarena_displacement`). |
+|`sysarena_is_fully_merged(ArenaManager *manager)`|Funtion to see if the system has merged|
 
 ---
 
