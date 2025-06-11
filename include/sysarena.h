@@ -15,60 +15,49 @@
 #ifndef _SYSARENA_H
 #define _SYSARENA_H
 
-#include "types.h" // incluir types.h ya no es rebundante
-
+#include "types.h"
 
 typedef struct Arena {
-    size_t size;
-    ptr_t base;
-    size_t used;
-    bool in_use;
-    bool is_contiguous;
+    size_t size;         // Tamaño total del bloque
+    ptr_t base;          // Puntero al inicio del bloque
+    size_t used;         // Bytes usados en el bloque
+    bool in_use;         // ¿Bloque ocupado?
+    bool is_contiguous;  // ¿Es contiguo para fusionar?
 } Arena;
 
 typedef struct ArenaManager {
-    Arena* arenas;
-    size_t max_arenas;
-    uint8_t *initial_memory;  
-    size_t initial_size;     
-    size_t current_arena_idx;
+    Arena* arenas;            // Array de arenas (bloques)
+    size_t max_arenas;        // Número total de arenas
+    uint8_t *initial_memory;  // Memoria inicial global
+    size_t initial_size;      // Tamaño inicial global
+    size_t current_arena_idx; // No es crítico para el modelo génesis, pero puede usarse
 } ArenaManager;
 
-// definiciones de funciones para arenas simples
+// Inicialización
+bool sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t total_size, size_t num_arenas);
 
+// Reservar memoria según el sistema génesis
+void* sysarena_alloc(ArenaManager *manager, size_t size);
 
-void poor_arena_init(Arena *arena); // inicializa una arena con solo un bool in_use=false;
+// Liberar un bloque entero
+bool sysarena_free(ArenaManager *manager, void *ptr);
 
-bool arena_init(Arena *arena, size_t size, ptr_t base); // inicializar arena
+// Fusionar arenas libres y contiguas
+void sysarena_defragment(ArenaManager *manager);
 
-void* arena_alloc(Arena *arena, size_t size); // reservar memoria
+// Inicializar arena vacía
+void poor_arena_init(Arena *arena);
 
-void arena_free(Arena *arena); // liberar toda la arena
+// Inicializar arena con datos
+bool arena_init(Arena *arena, size_t size, ptr_t base);
 
-
-// funciones de arenas complejas
-bool sysarena_init(ArenaManager *manager, uint8_t *memory, Arena *arenas, size_t size, size_t num_arenas); // inicializa el sistema de arenas
-
-bool arena_can_merge(const Arena *a, const Arena *b); // comprueba si 2 arenas se pueden fusionar
-
+// Utilidades (pueden mantenerse por compatibilidad)
+void copy_arena(Arena *dest, const Arena *src);
+bool arena_can_merge(const Arena *a, const Arena *b);
 bool arena_is_void(const Arena *a);
-
-bool arena_merge(Arena *dest, Arena *src); // une 2 arenas
-
-void sysarena_defragment(ArenaManager *manager); // recorre todas las arenas e intenta fusionarlas
-
-void* sysarena_alloc(ArenaManager *manager, size_t size); // reserva memoria en el sistema de multiples arenas
-
-bool sysarena_free(ArenaManager *manager, void *ptr); // libera memoria
-
-bool sysarena_split(ArenaManager *manager,  size_t arena_index, size_t size); // dividir una arena
-
-void sysarena_displacement(ArenaManager *manager, size_t from_wheres); //desplazar todas las arenas uno a la derecha
-
-//utilidades creadas para solucionar errores
-void copy_arena(Arena *dest, const Arena *src); // copia una arena
-
+bool arena_merge(Arena *dest, Arena *src);
+void sysarena_displacement(ArenaManager *manager, size_t where);
+bool sysarena_split(ArenaManager *manager, size_t index, size_t size);
 bool sysarena_is_fully_merged(ArenaManager *manager);
-
 
 #endif
