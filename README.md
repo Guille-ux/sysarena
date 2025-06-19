@@ -33,7 +33,7 @@ Multiple arenas can be managed at once through an `ArenaManager`, allowing compl
 | `arena_alloc` | Allocates memory within a single arena. |
 | `arena_free` | Frees all memory within a single arena. |
 | `sysarena_init` | Initializes a system managing multiple arenas. |
-    | `arena_can_merge` | Checks if two arenas can be merged. |
+| `arena_can_merge` | Checks if two arenas can be merged. |
 | `arena_merge` | Merges two adjacent arenas. |
 | `sysarena_defragment` | Defragments the system by merging free adjacent arenas. |
 | `sysarena_alloc` | Allocates memory within the system of multiple arenas. |
