@@ -12,8 +12,8 @@
  Copyright (c) 2025 Guillermo Leira Temes
 */
 
-#include "../include/types.h"
-#include "../include/sysarena.h"
+#include "types.h"
+#include "sysarena.h"
 
 void poor_arena_init(Arena *arena) {
     if (!arena) return;
